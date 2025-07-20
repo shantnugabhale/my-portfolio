@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function startScrambleIntro() {
         const container = document.getElementById('shakti-container');
         const versionContainer = document.getElementById('version-container');
-        const targetName = 'SHANTNU';
+        const targetName = 'SHAkTI';
         const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$*+?';
         let letterSpans = [];
 

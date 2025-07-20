@@ -1,7 +1,7 @@
 :root {
     --cyber-blue: #00ffff;
     --cyber-pink: #ff0000;
-    /* --blue-glow: 0 0 7px #00ffff, 0 0 10px #00e6e6, 0 0 15px #00c8c8; */
+    --blue-glow: 0 0 7px #00ffff, 0 0 10px #00e6e6, 0 0 15px #00c8c8;
     --pink-glow: 0 0 7px #ff0000, 0 0 10px #e60000, 0 0 15px #c80000;
 }
 

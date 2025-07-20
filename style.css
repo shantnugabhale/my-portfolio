@@ -1,0 +1,144 @@
+:root {
+    --cyber-blue: #00ffff;
+    --cyber-pink: #ff0000;
+    /* --blue-glow: 0 0 7px #00ffff, 0 0 10px #00e6e6, 0 0 15px #00c8c8; */
+    --pink-glow: 0 0 7px #ff0000, 0 0 10px #e60000, 0 0 15px #c80000;
+}
+
+body.theme-fallout {
+    --cyber-blue: #23ff23; /* Green */
+    --cyber-pink: #ccff00; /* Lime */
+    --blue-glow: 0 0 7px #23ff23, 0 0 10px #23e623, 0 0 15px #23c823;
+    --pink-glow: 0 0 7px #ccff00, 0 0 10px #b8e600, 0 0 15px #a3c800;
+}
+
+body {
+    font-family: 'Fira Code', monospace;
+    background-color: #0d0221;
+    background-image: url('https://images.unsplash.com/photo-1544256718-3b62ff0ee03f?q=80&w=1974&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    color: var(--cyber-blue);
+    overflow: hidden;
+    cursor: url('https://cur.cursors-4u.net/cursors/cur-11/cur1054.cur'), auto;
+}
+
+body::after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(0deg, rgba(10, 0, 20, 0.4), rgba(10, 0, 20, 0.4) 1px, transparent 1px, transparent 4px);
+    pointer-events: none;
+    z-index: 10002;
+    opacity: 0.3;
+    animation: flicker 0.1s infinite;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.2; }
+    50% { opacity: 0.4; }
+    100% { opacity: 0.2; }
+}
+
+@keyframes window-open {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.top-bar {
+    background-color: rgba(13, 2, 33, 0.8);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0, 255, 255, 0.5);
+}
+
+.desktop-icon {
+    text-shadow: var(--blue-glow);
+    cursor: pointer;
+}
+
+.desktop-icon > span {
+    cursor: pointer;
+}
+
+.window {
+    background-color: rgba(13, 2, 33, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--cyber-blue);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+    resize: both;
+    min-width: 320px;
+    min-height: 240px;
+    animation: window-open 0.3s ease-out;
+}
+
+.window-header {
+    background-color: rgba(0, 255, 255, 0.1);
+    border-bottom: 1px solid var(--cyber-blue);
+    cursor: move;
+}
+
+.intro-screen, .boot-screen {
+    background-color: #0d0221;
+    z-index: 10001;
+}
+
+#shakti-container span {
+    color: var(--cyber-blue);
+    text-shadow: var(--blue-glow);
+    display: inline-block;
+    transition: transform 0.2s, text-shadow 0.2s;
+}
+
+#shakti-container span.solved {
+    transform: scale(1.1);
+    text-shadow: var(--blue-glow), 0 0 50px rgba(0, 255, 255, 0.7);
+}
+
+#version-container {
+    color: var(--cyber-pink);
+    text-shadow: var(--pink-glow);
+    transition: opacity 1s ease-in-out;
+    margin-top: 0.5rem;
+    letter-spacing: 0.1em;
+}
+
+.cyber-text-blue {
+    color: var(--cyber-blue);
+    text-shadow: var(--blue-glow);
+}
+
+.cyber-text-pink {
+    color: var(--cyber-pink);
+    text-shadow: var(--pink-glow);
+}
+
+.cyber-title {
+    font-family: 'Fira Code', monospace;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.cyber-subtitle {
+     font-family: 'Fira Code', monospace;
+     font-weight: bold;
+     color: var(--cyber-blue);
+     margin-top: 1rem;
+     margin-bottom: 0.5rem;
+}
+
+.window.active {
+    border-color: var(--cyber-pink);
+    box-shadow: 0 0 35px rgba(255, 0, 255, 0.5), var(--pink-glow);
+}
+
+.window.active .window-header {
+    background-color: rgba(255, 0, 255, 0.1);
+    border-bottom-color: var(--cyber-pink);
+}

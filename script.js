@@ -9,7 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
         reveal: new Audio('https://www.myinstants.com/media/sounds/sci-fi-bleep_1.mp3'),
         anim_type: new Audio('https://www.myinstants.com/media/sounds/key-press-sound-effect.mp3')
     };
-    Object.values(sfx).forEach(sound => sound.volume = 0.5);
+    Object.values(sfx).forEach(sound => {
+        if(sound instanceof Audio) sound.volume = 0.5;
+    });
 
     // --- Element References ---
     const desktop = document.getElementById('desktop');
@@ -19,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const bootProgress = document.getElementById('boot-progress');
     const bootStatus = document.getElementById('boot-status');
     const clockElement = document.getElementById('clock');
+    const preloader = document.getElementById('preloader');
 
     // --- State Variables ---
     let zIndexCounter = 100;
@@ -33,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 element.innerHTML += text.charAt(i++);
                 if (text.charAt(i - 1) !== ' ') {
                     sfx.anim_type.currentTime = 0;
-                    sfx.anim_type.play();
+                    sfx.anim_type.play().catch(e => {}); // Ignore play errors
                 }
                 setTimeout(type, speed);
             } else if (callback) {
@@ -81,7 +84,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createWindow(appId, appTitle) {
         if(openWindows[appId]) {
-            bringToFront(openWindows[appId].element);
+            const win = openWindows[appId].element;
+            win.style.display = 'flex'; // show if minimized
+            bringToFront(win);
             return;
         }
         sfx.open.play();
@@ -89,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const newWindow = template.querySelector('.window');
         newWindow.dataset.appId = appId;
         const contentTemplate = document.getElementById(`${appId}-content`);
-        if (contentTemplate && contentTemplate.innerHTML.trim() !== '') {
+        if (contentTemplate) {
             newWindow.querySelector('.window-content').appendChild(contentTemplate.content.cloneNode(true));
         }
         newWindow.querySelector('.window-title').textContent = appTitle;
@@ -99,12 +104,39 @@ document.addEventListener('DOMContentLoaded', () => {
         newWindow.style.top = `${y}px`;
         desktop.appendChild(newWindow);
         bringToFront(newWindow);
+
+        // Store original dimensions for maximizing
+        let originalDimensions = {
+            width: newWindow.style.width,
+            height: newWindow.style.height,
+            left: newWindow.style.left,
+            top: newWindow.style.top
+        };
+        let isMaximized = false;
+        
         openWindows[appId] = { element: newWindow };
+
         newWindow.querySelector('.window-close').addEventListener('click', () => {
             sfx.close.play();
             newWindow.remove();
             delete openWindows[appId];
         });
+        
+        newWindow.querySelector('.window-minimize').addEventListener('click', () => {
+            newWindow.style.display = 'none';
+        });
+
+        newWindow.querySelector('.window-maximize').addEventListener('click', () => {
+             if (isMaximized) {
+                Object.assign(newWindow.style, originalDimensions);
+                isMaximized = false;
+            } else {
+                 originalDimensions = { width: newWindow.style.width, height: newWindow.style.height, left: newWindow.style.left, top: newWindow.style.top };
+                 Object.assign(newWindow.style, { width: '100%', height: 'calc(100% - 2rem)', top: '2rem', left: '0' });
+                 isMaximized = true;
+            }
+        });
+
         newWindow.addEventListener('mousedown', () => bringToFront(newWindow));
         
         if (appId === 'terminal') initTerminal(newWindow);
@@ -117,91 +149,74 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let commandHistory = [];
         let historyIndex = -1;
+        const commands = {
+            'help': () => "Commands: open, ls, clear, theme, run, view, contact, open resume, whoami, shantnu",
+            'ls': () => 'data  manifest  projects  broadcast  core  terminal',
+            'open': (args) => {
+                const app = args[0];
+                const appMap = { 'data': 'Personal Data', 'manifest': 'Manifest', 'projects': 'Projects', 'broadcast': 'Broadcast', 'core': 'Core Tech Stack', 'terminal': 'Console' };
+                if (appMap[app]) {
+                    createWindow(app, appMap[app]);
+                    return `Opening ${app}...`;
+                }
+                return `Unknown app: '${app}'. Use 'ls' to see available apps.`;
+            },
+            'whoami': () => 'A ghost. A whisper in the wire.',
+            'shantnu': () => 'The name of my creator. A memory.',
+            'theme': (args) => {
+                const themeName = args[0];
+                if (themeName === 'fallout') {
+                    document.body.className = 'theme-fallout';
+                    return "Theme switched to 'fallout'.";
+                } else if (themeName === 'default' || themeName === 'matrix') {
+                    document.body.className = '';
+                    return "Theme reset to default matrix.";
+                }
+                return "Unknown theme. Available: 'default', 'fallout'";
+            },
+            'run': (args) => (args[0] === 'projects') ? commands.open(args) : "Unknown 'run' command. Did you mean 'run projects'?",
+            'view': (args) => {
+                if (args[0] === 'skills') {
+                    return commands.open(['core']);
+                }
+                return "Unknown 'view' command. Did you mean 'view skills'?";
+            },
+            'contact': (args) => {
+                 if (args[0] === 'me') {
+                    return commands.open(['broadcast']);
+                }
+                 return "Unknown 'contact' command. Did you mean 'contact me'?";
+            },
+            'resume': () => {
+               window.open('./Shantnu_Gabhale_Resume.pdf', '_blank');
+               return 'Opening resume in new tab...';
+            },
+            'clear': () => {
+                output.querySelectorAll('div:not(.terminal-prompt)').forEach(el => el.remove());
+                return null;
+            }
+        };
 
         const handleCommand = (command) => {
-            const [cmd, ...args] = command.toLowerCase().split(' ');
-            const commands = {
-                'help': "Commands: open, ls, clear, theme, run, view, contact, open resume",
-                'ls': 'data  manifest  projects  broadcast  core  terminal',
-                'open': () => {
-                    const app = args[0];
-                    const appMap = {
-                        'data': 'Personal Data',
-                        'manifest': 'Manifest',
-                        'projects': 'Projects',
-                        'broadcast': 'Broadcast',
-                        'core': 'Core Tech Stack',
-                        'terminal': 'Console'
-                    };
-                    if (appMap[app]) {
-                        createWindow(app, appMap[app]);
-                        return `Opening ${app}...`;
-                    }
-                    return `Unknown app: '${app}'. Use 'ls' to see available apps.`;
-                },
-                'whoami': 'A ghost. A whisper in the wire.',
-                'shantnu': 'The name of my creator. A memory.',
-                'theme': () => {
-                    const themeName = args[0];
-                    if (themeName === 'fallout') {
-                        document.body.className = 'theme-fallout';
-                        return "Theme switched to 'fallout'.";
-                    } else if (themeName === 'default' || themeName === 'matrix') {
-                        document.body.className = '';
-                        return "Theme reset to default matrix.";
-                    }
-                    return "Unknown theme. Available: 'default', 'fallout'";
-                },
-                'run': () => {
-                    if (args[0] === 'projects') return commands.open();
-                    return "Unknown 'run' command. Did you mean 'run projects'?";
-                },
-                'view': () => {
-                    if (args[0] === 'skills') {
-                        args[0] = 'core'; // map 'skills' to 'core'
-                        return commands.open();
-                    }
-                    return "Unknown 'view' command. Did you mean 'view skills'?";
-                },
-                'contact': () => {
-                    if (args[0] === 'me') {
-                        args[0] = 'broadcast';
-                        return commands.open();
-                    }
-                     return "Unknown 'contact' command. Did you mean 'contact me'?";
-                },
-                'resume': () => { // Catch 'open resume'
-                   window.open('./Shantnu_Gabhale_Resume.pdf', '_blank');
-                   return 'Opening resume in new tab...';
-                },
-                'clear': () => {
-                    output.querySelectorAll('div:not(.terminal-prompt)').forEach(el => el.remove());
-                    return null;
-                }
-            };
-
+            const fullCommand = command.toLowerCase().trim();
             let result;
-            const fullCommand = command.toLowerCase();
+
             if (fullCommand === 'open resume') {
                 result = commands.resume();
             } else {
+                const [cmd, ...args] = fullCommand.split(' ');
                 const commandAction = commands[cmd];
                 if (commandAction) {
-                    if (typeof commandAction === 'function') {
-                        result = commandAction();
-                    } else {
-                        result = commandAction;
-                    }
+                    result = commandAction(args);
                 } else {
                     result = `COMMAND_NOT_FOUND: '${cmd}'. Try 'help'.`;
                 }
             }
-
             if (result !== null) {
                 const resultLine = document.createElement('div');
                 resultLine.className = "mb-2";
                 output.insertBefore(resultLine, prompt);
-                typeWriter(resultLine, result, 10, () => {
+                typeWriter(resultLine, String(result), 10, () => {
                     output.scrollTop = output.scrollHeight;
                 });
             }
@@ -209,9 +224,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         input.addEventListener('keydown', (e) => {
             sfx.type.currentTime = 0;
-            sfx.type.play();
+            sfx.type.play().catch(e => {});
 
             if (e.key === 'Enter') {
+                e.preventDefault();
                 const command = input.value.trim();
                 const echoLine = document.createElement('div');
                 echoLine.innerHTML = `<span class="cyber-text-pink">shantnu@matrix:~$</span> <span class="ml-2">${command}</span>`;
@@ -263,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let scrambleInterval = setInterval(() => {
             sfx.glitch.loop = true;
-            sfx.glitch.play();
+            sfx.glitch.play().catch(e => {});
             letterSpans.forEach(span => {
                 if (!span.classList.contains('solved')) {
                     span.textContent = charset[Math.floor(Math.random() * charset.length)];
@@ -291,16 +307,21 @@ document.addEventListener('DOMContentLoaded', () => {
             span.textContent = span.dataset.char;
             span.classList.add('solved');
             sfx.reveal.currentTime = 0;
-            sfx.reveal.play();
+            sfx.reveal.play().catch(e => {});
             setTimeout(() => revealLetter(index + 1), 300);
         };
         setTimeout(() => revealLetter(0), 500);
     }
 
     // --- Initial Setup ---
-    startScrambleIntro();
+    setTimeout(() => {
+        preloader.style.display = 'none';
+        startScrambleIntro();
+    }, 1000);
+
     updateClock();
     setInterval(updateClock, 1000);
+
     document.querySelectorAll('[data-app-id]').forEach(icon => {
         icon.addEventListener('click', () => {
             sfx.click.play();
@@ -309,6 +330,36 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Interact.js Setup ---
-    interact('.desktop-icon').draggable({ inertia: true, modifiers: [interact.modifiers.restrictRect({ restriction: 'parent', endOnly: true })], listeners: { move(event) { const target = event.target, x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx, y = (parseFloat(event.target.getAttribute('data-y')) || 0) + event.dy; target.style.transform = `translate(${x}px, ${y}px)`; target.setAttribute('data-x', x); target.setAttribute('data-y', y); } } });
+    const gridTarget = interact.snappers.grid({
+        x: 110, // Horizontal grid spacing
+        y: 110  // Vertical grid spacing
+    });
+
+    interact('.desktop-icon').draggable({
+        inertia: true,
+        modifiers: [
+            interact.modifiers.snap({
+                targets: [gridTarget],
+                range: Infinity,
+                relativePoints: [ { x: 0, y: 0 } ]
+            }),
+            interact.modifiers.restrictRect({
+                restriction: 'parent',
+                endOnly: true
+            })
+        ],
+        listeners: {
+            move(event) {
+                const target = event.target;
+                const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+                const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+                target.style.transform = `translate(${x}px, ${y}px)`;
+                target.setAttribute('data-x', x);
+                target.setAttribute('data-y', y);
+            }
+        }
+    });
+
     interact('.window').draggable({ allowFrom: '.window-header', inertia: true, modifiers: [interact.modifiers.restrictRect({ restriction: 'parent', endOnly: true })], listeners: { move(event) { const target = event.target, x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx, y = (parseFloat(event.target.getAttribute('data-y')) || 0) + event.dy; target.style.transform = `translate(${x}px, ${y}px)`; target.setAttribute('data-x', x); target.setAttribute('data-y', y); } } }).resizable({ edges: { left: true, right: true, bottom: true, top: false }, listeners: { move(event) { Object.assign(event.target.style, { width: `${event.rect.width}px`, height: `${event.rect.height}px` }); } }, modifiers: [interact.modifiers.restrictSize({ min: { width: 320, height: 240 } })] });
 });

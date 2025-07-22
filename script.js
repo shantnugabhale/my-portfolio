@@ -330,36 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Interact.js Setup ---
-    const gridTarget = interact.snappers.grid({
-        x: 110, // Horizontal grid spacing
-        y: 110  // Vertical grid spacing
-    });
-
-    interact('.desktop-icon').draggable({
-        inertia: true,
-        modifiers: [
-            interact.modifiers.snap({
-                targets: [gridTarget],
-                range: Infinity,
-                relativePoints: [ { x: 0, y: 0 } ]
-            }),
-            interact.modifiers.restrictRect({
-                restriction: 'parent',
-                endOnly: true
-            })
-        ],
-        listeners: {
-            move(event) {
-                const target = event.target;
-                const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-                const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-
-                target.style.transform = `translate(${x}px, ${y}px)`;
-                target.setAttribute('data-x', x);
-                target.setAttribute('data-y', y);
-            }
-        }
-    });
-
+    // Icon dragging has been removed to favor a CSS-driven responsive layout.
+    // The windows remain draggable and resizable.
     interact('.window').draggable({ allowFrom: '.window-header', inertia: true, modifiers: [interact.modifiers.restrictRect({ restriction: 'parent', endOnly: true })], listeners: { move(event) { const target = event.target, x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx, y = (parseFloat(event.target.getAttribute('data-y')) || 0) + event.dy; target.style.transform = `translate(${x}px, ${y}px)`; target.setAttribute('data-x', x); target.setAttribute('data-y', y); } } }).resizable({ edges: { left: true, right: true, bottom: true, top: false }, listeners: { move(event) { Object.assign(event.target.style, { width: `${event.rect.width}px`, height: `${event.rect.height}px` }); } }, modifiers: [interact.modifiers.restrictSize({ min: { width: 320, height: 240 } })] });
 });

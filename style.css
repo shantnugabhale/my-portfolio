@@ -35,6 +35,25 @@ body::after {
     animation: flicker 0.1s infinite;
 }
 
+/* --- Custom Scrollbar --- */
+::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    background: #0d0221;
+    border-left: 1px solid var(--cyber-blue);
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--cyber-blue);
+    border-radius: 20px;
+    border: 3px solid #0d0221;
+    box-shadow: var(--blue-glow);
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--cyber-pink);
+    box-shadow: var(--pink-glow);
+}
+
 @keyframes flicker {
     0% { opacity: 0.2; }
     50% { opacity: 0.4; }
@@ -52,6 +71,18 @@ body::after {
     }
 }
 
+/* --- Blinking Cursor for Terminal --- */
+@keyframes blink {
+    from, to { border-color: transparent }
+    50% { border-color: var(--cyber-blue); }
+}
+.terminal-input:focus {
+    outline: none;
+    border-right: 2px solid var(--cyber-blue);
+    animation: blink 1s step-end infinite;
+}
+
+
 .top-bar {
     background-color: rgba(13, 2, 33, 0.8);
     backdrop-filter: blur(8px);
@@ -61,6 +92,12 @@ body::after {
 .desktop-icon {
     text-shadow: var(--blue-glow);
     cursor: pointer;
+    transition: transform 0.2s, text-shadow 0.2s;
+}
+
+.desktop-icon:hover {
+    transform: scale(1.1);
+    text-shadow: 0 0 15px var(--cyber-blue), 0 0 25px var(--cyber-blue);
 }
 
 .desktop-icon > span {
@@ -76,6 +113,7 @@ body::after {
     min-width: 320px;
     min-height: 240px;
     animation: window-open 0.3s ease-out;
+    transition: all 0.2s ease-in-out, opacity 0.3s, transform 0.3s;
 }
 
 .window-header {
@@ -141,4 +179,34 @@ body::after {
 .window.active .window-header {
     background-color: rgba(255, 0, 255, 0.1);
     border-bottom-color: var(--cyber-pink);
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+    #desktop > div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+    .desktop-icon {
+        width: 6rem; /* Make icons bigger for touch */
+        font-size: 0.8rem;
+    }
+    .desktop-icon > .icon-font {
+        font-size: 3rem;
+    }
+    .window {
+        width: 90vw !important; /* Make windows take up more screen width */
+        height: 70vh !important;
+        left: 5vw !important;
+        top: 10vh !important;
+        transform: none !important; /* Reset transform from JS drag */
+    }
+    .top-bar {
+        font-size: 0.7rem;
+    }
+    #shakti-container {
+        font-size: 4rem;
+    }
 }

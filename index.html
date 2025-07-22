@@ -13,6 +13,10 @@
 </head>
 <body class="w-screen h-screen">
 
+    <div id="preloader" class="fixed inset-0 flex items-center justify-center bg-black z-[10003]">
+        <div class="text-4xl cyber-text-blue animate-pulse">[LOADING...]</div>
+    </div>
+
     <div id="intro-screen" class="intro-screen fixed inset-0 flex flex-col items-center justify-center">
         <div id="shakti-container" class="text-8xl font-bold text-center tracking-widest"></div>
         <p id="version-container" class="text-2xl opacity-0"></p>
@@ -67,12 +71,16 @@
             </a>
         </div>
     </main>
-
+    
     <template id="window-template">
         <div class="window absolute flex flex-col rounded-none overflow-hidden touch-none" style="width: 640px; height: 480px;">
             <div class="window-header h-8 flex items-center justify-between px-2 text-sm font-bold">
                 <span class="window-title cyber-title"></span>
-                <button class="window-close text-fuchsia-500 hover:text-fuchsia-400">[X]</button>
+                <div class="flex items-center space-x-2">
+                     <button class="window-minimize text-fuchsia-500 hover:text-fuchsia-400">[_]</button>
+                     <button class="window-maximize text-fuchsia-500 hover:text-fuchsia-400">[O]</button>
+                     <button class="window-close text-fuchsia-500 hover:text-fuchsia-400">[X]</button>
+                </div>
             </div>
             <div class="window-content flex-grow p-4 overflow-auto"></div>
         </div>

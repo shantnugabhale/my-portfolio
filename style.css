@@ -259,6 +259,69 @@ body::after {
     text-shadow: var(--pink-glow);
 }
 
+.skill-category a {
+    color: var(--cyber-blue);
+    text-decoration: none;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+.skill-category a:hover {
+    color: var(--cyber-pink);
+    text-shadow: var(--pink-glow);
+    text-decoration: underline;
+}
+
+/* --- Language Proficiency Bars --- */
+.language-list {
+    list-style: none;
+    padding: 0;
+}
+.language-list li {
+    margin-bottom: 1rem;
+}
+.lang-bar {
+    width: 100%;
+    height: 12px;
+    background-color: rgba(255, 0, 0, 0.1);
+    border: 1px solid var(--cyber-pink);
+    margin-top: 0.5rem;
+}
+.lang-progress {
+    height: 100%;
+    background-color: var(--cyber-pink);
+    box-shadow: var(--pink-glow);
+    animation: progress-load 2s ease-out;
+}
+@keyframes progress-load {
+    from { width: 0; }
+}
+
+/* --- Manifest Section UI --- */
+.manifest-section {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+}
+.manifest-section:last-child {
+    border-bottom: none;
+}
+.manifest-list {
+    list-style: none;
+    padding: 0;
+}
+.manifest-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+.manifest-list li::before {
+    content: '»';
+    position: absolute;
+    left: 0;
+    color: var(--cyber-pink);
+    text-shadow: var(--pink-glow);
+}
+
 
 /* --- Mobile Responsiveness --- */
 @media (max-width: 768px) {

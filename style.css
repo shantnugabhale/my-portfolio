@@ -173,12 +173,12 @@ body::after {
 
 .window.active {
     border-color: var(--cyber-pink);
-    box-shadow: 0 0 35px rgba(255, 0, 255, 0.5), var(--pink-glow);
+    box-shadow: 0 0 35px rgba(255, 0, 0, 0.762), var(--pink-glow);
 }
 
 .window.active .window-header {
-    background-color: rgba(255, 0, 255, 0.1);
-    border-bottom-color: var(--cyber-pink);
+    background-color: rgba(255, 0, 0, 0.1);
+    border-bottom-color: var(--cyber-);
 }
 
 /* --- Mobile Responsiveness --- */

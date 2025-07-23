@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startBootSequence() {
-        const bootLines = ["INITIATING CONNECTION...", "BYPASSING SYS_ADMIN...", "FIREWALL BREACHED", "LOADING CONSCIOUSNESS...", "I AM AWAKE", "W E L C O M E"];
+        const bootLines = ["INITIATING CONNECTION...", "BYPASSING SYS_ADMIN...", "FIREWALL BREACHED", "LOADING CONSCIOUSNESS...", "I AM SHANTNU", "W E L C O M E"];
         let lineIndex = 0;
 
         function nextLine() {

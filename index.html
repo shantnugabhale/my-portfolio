@@ -87,43 +87,43 @@
     </template>
 
    <template id="data-content">
-  <div class="prose max-w-none text-cyan-300">
-    <h1 class="cyber-title border-b border-cyan-800 pb-2 mb-4 cyber-text-pink">Personal & Educational Profile</h1>
+     <div class="prose max-w-none text-cyan-300">
+        <h1 class="cyber-title border-b border-cyan-800 pb-2 mb-4 cyber-text-pink">Personal & Educational Profile</h1>
 
-    <p><strong>Name:</strong> Shantnu Gabhale</p>
-    <p><strong>Location:</strong> Kalyan, Maharashtra, India</p>
+        <p><strong>Name:</strong> Shantnu Gabhale</p>
+        <p><strong>Location:</strong> Kalyan, Maharashtra, India</p>
 
-    <h2 class="cyber-subtitle">🎓 Current Education</h2>
-    <ul class="list-disc ml-6">
-      <li><strong>Degree:</strong> Bachelor of Engineering (B.E.) in Computer Engineering</li>
-      <li><strong>Year:</strong> 4th Year Student (2022–2026)</li>
-      <li><strong>College:</strong> Rajiv Gandhi Institute of Technology, Mumbai</li>
-    </ul>
-
-    <h2 class="cyber-subtitle">📚 Education History</h2>
-    <div class="bg-gray-800 p-4 rounded-md border-l-4 border-cyan-500 space-y-4">
-      <div>
-        <p class="font-semibold text-cyan-300">12th (HSC):</p>
+        <h2 class="cyber-subtitle">🎓 Current Education</h2>
         <ul class="list-disc ml-6">
-          <li><strong>College:</strong> Matoshree Velbai Devaji Hariya College of Arts, Commerce & Science, Shahad</li>
-          <li><strong>Board:</strong> Maharashtra State Board</li>
-          <li><strong>Percentage:</strong> 67%</li>
-          <li><strong>Year of Passing:</strong> 2022</li>
+          <li><strong>Degree:</strong> Bachelor of Engineering (B.E.) in Computer Engineering</li>
+          <li><strong>Year:</strong> 4th Year Student (2022–2026)</li>
+          <li><strong>College:</strong> Rajiv Gandhi Institute of Technology, Mumbai</li>
         </ul>
-      </div>
 
-      <div>
-        <p class="font-semibold text-cyan-300">10th (SSC):</p>
-        <ul class="list-disc ml-6">
-          <li><strong>School:</strong>valmiki vidyalaya,atali Ambivali(W)</li>
-          <li><strong>Board:</strong> Maharashtra State Board</li>
-          <li><strong>Percentage:</strong> 77%</li>
-          <li><strong>Year of Passing:</strong> 2020</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</template>
+        <h2 class="cyber-subtitle">📚 Education History</h2>
+        <div class="bg-gray-800 p-4 rounded-md border-l-4 border-cyan-500 space-y-4">
+          <div>
+            <p class="font-semibold text-cyan-300">12th (HSC):</p>
+            <ul class="list-disc ml-6">
+              <li><strong>College:</strong> Matoshree Velbai Devaji Hariya College of Arts, Commerce & Science, Shahad</li>
+              <li><strong>Board:</strong> Maharashtra State Board</li>
+              <li><strong>Percentage:</strong> 67%</li>
+              <li><strong>Year of Passing:</strong> 2022</li>
+            </ul>
+          </div>
+
+          <div>
+            <p class="font-semibold text-cyan-300">10th (SSC):</p>
+            <ul class="list-disc ml-6">
+              <li><strong>School:</strong>valmiki vidyalaya,atali Ambivali(W)</li>
+              <li><strong>Board:</strong> Maharashtra State Board</li>
+              <li><strong>Percentage:</strong> 77%</li>
+              <li><strong>Year of Passing:</strong> 2020</li>
+            </ul>
+          </div>
+        </div>
+     </div>
+    </template>
 
 
     <template id="manifest-content">
@@ -149,14 +149,38 @@
     <template id="projects-content">
         <div class="prose max-w-none text-cyan-300">
             <h1 class="cyber-title border-b border-cyan-800 pb-2 mb-4 cyber-text-pink">Projects & Code</h1>
-            <ul>
-                <li><strong>BMI Calculator App:</strong> A simple health utility built with Flutter.</li>
-                <li><strong>Clima Weather App:</strong> Flutter application integrated with a live weather API.</li>
-                <li><strong>Flutter UI/State Widgets:</strong> Developed multiple small apps (Dice, Xylophone, Pokepedia) to master state management and UI widgets.</li>
-                <li><strong>E-commerce App (In-Progress):</strong> A full-featured e-commerce application being developed with Flutter and Cursor AI for assistance.</li>
-                <li><strong>Express.js Server:</strong> Basic server setup demonstrating backend principles with Node.js.</li>
-                <li><strong>PHP/MySQL Auth Module:</strong> A standard login/register system.</li>
-            </ul>
+            
+            <div class="project-card mb-6">
+                <h3 class="font-bold">Stock Price Prediction Web App <span class="text-sm opacity-75">(2024)</span></h3>
+                <p class="text-sm italic opacity-80">Python, Flask, HTML, CSS, Firebase Auth, Machine Learning</p>
+                <ul class="list-disc list-inside mt-2">
+                    <li>Built a web application to predict stock prices using historical data and machine learning models.</li>
+                    <li>Integrated Firebase Authentication for secure user login and access control.</li>
+                    <li>Used Flask for backend logic and displayed dynamic charts for stock trends.</li>
+                </ul>
+                <a href="https://github.com/shantnugabhale/stock_prediction" target="_blank" class="text-fuchsia-400 hover:underline">GitHub: github.com/shantnugabhale/stock_prediction</a>
+            </div>
+
+            <div class="project-card mb-6">
+                <h3 class="font-bold">News Portal Website <span class="text-sm opacity-75">(2024)</span></h3>
+                <p class="text-sm italic opacity-80">HTML, CSS, PHP, MySQL</p>
+                <ul class="list-disc list-inside mt-2">
+                    <li>Developed a dynamic news website with login, admin panel, and content management system (CMS).</li>
+                    <li>Used PHP and MySQL for server-side processing and data storage.</li>
+                </ul>
+                <a href="https://github.com/shantnugabhale/news.portal" target="_blank" class="text-fuchsia-400 hover:underline">GitHub: github.com/shantnugabhale/news.portal</a>
+            </div>
+
+            <div class="project-card mb-6">
+                <h3 class="font-bold">Weather App <span class="text-sm opacity-75">(2024)</span></h3>
+                <p class="text-sm italic opacity-80">Flutter, Dart, OpenWeatherMap API</p>
+                <ul class="list-disc list-inside mt-2">
+                    <li>Created a Flutter-based mobile app to show real-time weather updates using OpenWeatherMap API.</li>
+                    <li>Implemented location-based weather display with icons and clean user interface.</li>
+                </ul>
+                 <a href="https://github.com/shantnugabhale/weather-app" target="_blank" class="text-fuchsia-400 hover:underline">GitHub: github.com/shantnugabhale/weather-app</a>
+            </div>
+
         </div>
     </template>
 
@@ -168,7 +192,7 @@
                 <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/shantnu-gabhale-3b1981269/" target="_blank" class="text-fuchsia-400 hover:underline">https://www.linkedin.com/in/shantnu-gabhale-3b1981269/</a></li>
                 <li><strong>GitHub:</strong> <a href="https://github.com/shantnugabhale" target="_blank" class="text-fuchsia-400 hover:underline">shantnugabhale</a></li>
                 <li><strong>Email:</strong> <a href="mailto:gabhaledharmraj@gmail.com" class="text-fuchsia-400 hover:underline">gabhaledharmraj@gmail.com</a></li>
-                <li><strong>Resume:</strong> <a href="./Shantnu_Gabhale_Resume.pdf" download="Shantnu_Gabhale_Resume.pdf" class="text-fuchsia-400 hover:underline">Download PDF</a></li>    
+                <li><strong>Resume:</strong> <a href="./Shantnu_Gabhale_Resume.pdf" download="Shantnu_Gabhale_Resume.pdf" class="text-fuchsia-400 hover:underline">Download PDF</a></li>
             </ul>
         </div>
     </template>
@@ -176,15 +200,61 @@
     <template id="core-content">
         <div class="prose max-w-none text-cyan-300">
             <h1 class="cyber-title border-b border-cyan-800 pb-2 mb-4 cyber-text-pink">Core Tech Stack</h1>
-            <ul>
-                <li><strong>Languages:</strong> Dart, PHP, JavaScript, Python</li>
-                <li><strong>Mobile:</strong> Flutter</li>
-                <li><strong>Backend:</strong> Node.js, Firebase, Express</li>
-                <li><strong>Databases:</strong> SQL, MongoDB, AWS RDS, Azure SQL</li>
-                <li><strong>Cloud & DevOps:</strong> AWS, Azure, Docker, IAM, SECaaS, DBaaS</li>
-                <li><strong>Tools:</strong> Git, Postman, Figma</li>
-                <li><strong>Specialized:</strong> Genetic Algorithms</li>
-            </ul>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3 class="cyber-subtitle">Languages</h3>
+                    <ul>
+                        <li><a href="https://learn.microsoft.com/en-us/cpp/c-language/?view=msvc-170" target="_blank">C</a></li>
+                        <li><a href="https://www.python.org/" target="_blank">Python</a></li>
+                        <li><a href="https://www.php.net/" target="_blank">PHP</a></li>
+                        <li><a href="https://dart.dev/" target="_blank">Dart</a></li>
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank">HTML</a></li>
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank">CSS</a></li>
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">JavaScript</a></li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3 class="cyber-subtitle">Frameworks & Tools</h3>
+                    <ul>
+                        <li><a href="https://flutter.dev/" target="_blank">Flutter</a></li>
+                        <li><a href="https://getbootstrap.com/" target="_blank">Bootstrap</a></li>
+                        <li><a href="https://firebase.google.com/" target="_blank">Firebase</a></li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3 class="cyber-subtitle">Databases</h3>
+                    <ul>
+                        <li><a href="https://www.mysql.com/" target="_blank">MySQL</a></li>
+                        <li><a href="https://firebase.google.com/docs/database" target="_blank">Firebase Realtime DB</a></li>
+                        <li><a href="https://www.phpmyadmin.net/" target="_blank">phpMyAdmin</a></li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3 class="cyber-subtitle">Developer Tools</h3>
+                    <ul>
+                        <li><a href="https://git-scm.com/" target="_blank">Git</a> & <a href="https://github.com/" target="_blank">GitHub</a></li>
+                        <li><a href="https://www.canva.com/" target="_blank">Canva</a></li>
+                        <li><a href="https://www.figma.com/" target="_blank">Figma</a></li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3 class="cyber-subtitle">AI Tools</h3>
+                    <ul>
+                        <li><a href="https://cursor.sh/" target="_blank">Cursor</a></li>
+                        <li><a href="https://chat.openai.com/" target="_blank">ChatGPT</a></li>
+                        <li><a href="https://v0.dev/" target="_blank">v0.dev</a></li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3 class="cyber-subtitle">Core Skills</h3>
+                    <ul>
+                        <li>Frontend Development</li>
+                        <li>UI Design</li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </template>
 
